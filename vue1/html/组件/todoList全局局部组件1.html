@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue组件化todoList</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+        <div id="app">
+            <input type="text" v-model="todoValue"/>
+            <button @click="handleBtnClick">提交</button>    
+            <ul>
+                <todo-item v-bind:contentaa_bb="item" 
+                           v-for="item in items">
+                </todo-item>   <!--此处遍历出来的item被绑定到contentaa_bb中  继而传给todo-item组件-->
+            </ul>
+                  
+        </div>
+        <!-- <ul>
+            <li v-for="item in items">{{item}}</li>
+        </ul> -->
+      
+
+        <script>
+
+
+            Vue.component("TodoItem",{
+                props: ['contentaa_bb'],
+                template: "<li>{{contentaa_bb}}</li>"
+            })
+
+             var app=new Vue({
+                 el: '#app',
+                 data: {
+                     items: [],
+                     todoValue: ''
+                 },
+                 methods: {
+                    handleBtnClick: function(){
+                        this.items.push(this.todoValue);
+                        this.todoValue=''
+                    }
+                 }
+             })
+        </script>
+</body>
+</html>
