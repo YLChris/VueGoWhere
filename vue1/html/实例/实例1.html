@@ -1,0 +1,36 @@
+<!--vue.$destroy()可以销毁实例  销毁之后就不能用vm.$el或者其他属性了-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue实例</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div @click="handleClick">
+             {{message}}<!--叉值表达式-->
+        </div>
+        <item></item>
+    </div>
+
+    <script>
+
+        //子组件在编译时也会被编译成一个vue实例   可以在页面用vm.$el或者vm.$data或者vm.$methods显示该属性，用$的表示可以引出vue属性
+        Vue.component('item',{
+            template:'<div>item子组件</div>'
+        })
+            var vm =new Vue({
+                el: '#root' ,//接管dom最外层的标签 也就是vue实例接管root里dom的显示
+                data: {
+                    message: 'hello world'
+                },
+                methods: {
+                    handleClick: function(){
+                        alert("hello");
+                    }
+                }
+            })
+    </script>
+</body>
+</html>

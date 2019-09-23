@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>vue组件化todoList</title>
-    <script src="../vue.js"></script>
+    <script src="../../vue.js"></script>
 </head>
 <body>
         <div id="app">
             <input type="text" v-model="todoValue"/>
             <button @click="handleBtnClick">提交</button>    
             <ul>
+                <!--此处遍历出来的item被绑定到contentaa_bb中  继而传给todo-item组件-->
                 <todo-item v-bind:contentaa_bb="item" 
                            v-for="item in items">
-                </todo-item>   <!--此处遍历出来的item被绑定到contentaa_bb中  继而传给todo-item组件-->
+                </todo-item>   
             </ul>
                   
         </div>
@@ -23,14 +24,23 @@
 
         <script>
 
+            // 全局组件
+            // Vue.component("TodoItem",{//最好写成todo-item,TodoItem驼峰大小写均可
+            //     props: ['contentaa_bb'], //contentaa_bb是外部传递的数据
+            //     template: "<li>{{contentaa_bb}}</li>"  //模板 用了Todo-Item标签  到时候会被模板里的东西替换掉
+            // })
 
-            Vue.component("TodoItem",{
+            //局部组件  需要注册到vue实例种
+            var TodoItems = {
                 props: ['contentaa_bb'],
                 template: "<li>{{contentaa_bb}}</li>"
-            })
+            }
 
              var app=new Vue({
                  el: '#app',
+                 components:{
+                    TodoItem: TodoItems
+                 },
                  data: {
                      items: [],
                      todoValue: ''

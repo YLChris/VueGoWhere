@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue组件化todoList</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+        <div id="app">
+            <input type="text" v-model="todoValue"/>
+            <button @click="handleBtnClick">提交</button>    
+            <ul>
+                <!--1.v-on:delete可以简写为@delete，监听事件
+                    2.v-bind:contentaa_bb可以简写为：contentaa_bb  
+                    3.item_index是数组下标   v-bind:item_index是将下标传递给父组件  要传递值需要在子组件中声明-->
+                <todo-item :contentaa_bb="item"  
+                           :item_indexbb="item_indexaa"
+                           v-for="(item,item_indexaa) in items"
+                           v-on:delete="handleItemDelete">
+                </todo-item>   
+            </ul>
+                  
+        </div>
+        <script>
+            var TodoItems = {
+                props: ['contentaa_bb','item_indexbb'],
+                template: "<li @click='handleItemClick'>{{contentaa_bb}}</li>",
+                methods: {
+                    handleItemClick: function (){
+                        this.$emit("delete",this.item_indexbb);//$emit事件向上一层触发delete即handleItemDelete事件   点击子组件的时候会触发事件   此时的Vue是父组件   TodoItem是子组件
+                    }
+                }
+            }
+
+             var app=new Vue({
+                 el: '#app',
+                 components:{
+                    TodoItem: TodoItems
+                 },
+                 data: {
+                     items: [],
+                     todoValue: ''
+                 },
+                 methods: {
+                    handleBtnClick: function(){
+                        this.items.push(this.todoValue);
+                        this.todoValue=''
+                    },
+                    handleItemDelete: function(index){
+                        this.items.splice(index,1)
+                    }
+                 }
+             })
+        </script>
+</body>
+</html>
