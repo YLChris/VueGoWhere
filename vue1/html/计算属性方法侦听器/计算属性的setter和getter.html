@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性方法侦听器</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{fullName}}<!--插值表达式将会先去查找data数据  若data属性里面没有对应的数据  则回去找computed-->
+
+    </div>
+
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                firstName:'Dell',
+                lastName:'Lee'
+            },
+            computed:{
+                fullName:{
+                    get: function(){
+                        return this.firstName+" "+this.lastName;
+                    },
+                    set: function(value){
+                        var arr=value.split(" ");
+                        this.firstName=arr[0];
+                        this.lastName=arr[1];
+                        console.log(value+"aaa");
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

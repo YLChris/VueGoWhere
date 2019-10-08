@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板语法</title>
+    <!--插值表达式以及各种v-xxx的指令后面都是一个js表达式，不仅可以是变量，也可以加上一些常量之类的-->
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>{{name+' 也是个js表达式,这个将会输出'}}</div>
+        <!--v-text的功能就是插值表达式的意思{{}}，此时的v-text="name"中的name不指代name字符串，而是指代vue实例中的data属性里的-->
+        <div v-text="name+'1+1'"></div>
+         <!--***划重点  凡是v-xxxxx的指令后接的里面都是js表达式  也就是说v-text="name"实际上是个js表达式-->
+        <div v-html="name"></div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                name: "<h1>Dell</h1>"
+            }
+
+        })
+    </script>
+</body>
+</html>
