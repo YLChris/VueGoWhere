@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+    <script src="../../vue.js"></script>
+    <!--
+        条件渲染的几种方式：
+            v-if   v-show
+            1:v-if 的数据若为false 则在dom元素上不存在该if下的元素   (data-test仅仅只是为了测试)
+            2：v-show的数据为false，则在dom元素上存在该if下的元素   只是以display:none的形式存在
+            效率：平时可以使用v-show因为效率较v-if高，因为不像v-if一样要频繁的在dom元素上添加或删除元素，只需要更改显示状态
+
+
+            v-if要和v-else连接一起使用  不能分割使用
+
+            还可以使用v-else-if
+    -->
+</head>
+<body>
+    <div id="app">
+        <div v-if="show==='a'" data-test="v-if">aaaaa{{message}}</div>
+        <div v-else-if="show==='b'" data-test="v-if">bbbbb{{message}}</div>
+        <div v-else>Bye world</div>
+        <div v-show="show" data-test="v-show">{{message}}</div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el: "#app",
+            data:{
+                show: 'a',
+                message: "hello world"
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ref操作dom元素</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        1:元素引用
+        console.log(this.$refs.helloDom)
+        输出结果：打印出helloDom引用的dom元素<div>元素引用</div>
+        
+        解释：
+        this是指vue实例； $refs是指整个Vue实例里的所有引用 ；  helloDom是所有引用里的某一个
+   
+        2：组件引用
+        console.log(this.$refs.counterRef1)
+        输出结果：打印出子组件的引用
+    -->
+</head>
+<body>
+    <div id="root">
+        <div ref='helloDom' 
+           @click="handleClick"><!--给这个div取了一个引用的名字helloDom-->
+          元素引用
+        </div>
+
+        <counter ref="counterRef1" @change="counterChange"></counter>
+        <counter ref="counterRef2" @change="counterChange"></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+
+        Vue.component('counter',{
+            data:function(){
+                return { 
+                    number:0
+                }
+            },
+            template:'<div @click="componentClick">{{number}}</div>',
+            methods:{
+                componentClick:function(){
+                    this.number++;
+                    this.$emit('change') //$emit是指子组件触发父组件的自定义事件
+                }
+            }
+        });
+
+        var vm=new Vue({
+            el: "#root",
+            data:{
+                total:0
+            },
+            methods:{
+                handleClick: function (){
+                   console.log(this.$refs.helloDom.innerHTML);
+                },
+                counterChange:function(){//当componentClick事件被点击，触发$emit事件通知父组件已改变，将会触发该方法计算两个counter的总和
+                    this.total=this.$refs.counterRef1.number+this.$refs.counterRef2.number; 
+                }
+            }
+        });
+    </script>
+</body>
+</html>

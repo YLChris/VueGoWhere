@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>样式绑定</title>
+    <script src="../../vue.js"></script>
+    <style>
+        .activated{
+            color: red;
+        }
+    </style>
+    <!--
+        1:目的：实现字体颜色的切换
+        2：知识点:  
+            样式绑定两种方案  
+            1.（:class="{}",对象绑定）
+                （1）:class即为v-bind:class，此称之为class的对象绑定
+                （2）：可以通过对boolean类型的数值进行取反达到来回切换的效果
+            2.:class=[activated]，此时接受的是一个数组，activated是个变量，在data下面定义的变量
+    -->
+</head>
+<body>
+        <!--这种样式的绑定称为class的对象绑定-->
+        <!--:class即为v-bind:class   :后面接的都是js对象表达式  此处表示有个属性名为activated,值为true则显现，为false则不显现这个class属性-->
+        <div id="app">
+            <div @click="handleDivClick1"
+                 :class="{activated: isActivied}">
+                hello chenzilong   
+            </div>
+
+            <div @click="handleDivClick2"
+                 :class="[activated,activatedOne]">
+                hello chenzilong   [activated]
+            </div>
+        </div>
+        <script>
+                var app=new Vue({
+                    el: '#app',
+                    data: {
+                        isActivied:false,//:class="{activated: isActivied}
+                        activated: "",//:class="[]"
+                        activatedOne: "activated-One"//此时将会有class属性为activated-One的class，此时activated为空
+                    },
+                    methods: {
+                        handleDivClick1:function(){
+                            this.isActivied=!this.isActivied;//直接对isActivied进行取反则可以实现所需效果
+                        },
+                        handleDivClick2:function(){
+                            this.activated=this.activated==="activated"?"":"activated";
+                        }
+                    }
+                })
+        </script>
+</body>
+</html>

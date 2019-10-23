@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>style样式绑定</title>
+    <script src="../../vue.js"></script>
+</head>
+<!--
+    目的：通过:style对样式进行操作
+    知识点：
+        两种方式：1：对象绑定形式   2：数组绑定形式
+        1：:style="styleObj"  此时styleObj是对象形式的变量存在data中
+        2：:style="[styleObj,{fontSize:'20px'}]"  此时数组形式，每一个数组代表一个对象形式的变量存在data中，也可以直接以对象的形式存放{color:'red'}}}
+-->
+<body>
+        <div id="app">
+            <div :style="styleObj" @click="handleDivClick">
+                hello chenzilong   
+            </div>
+
+            <div :style="[styleObj,{fontSize:'20px'}]">
+                    hello chenzilong    数组形式的样式绑定
+            </div>
+        </div>
+        <script>
+                var app=new Vue({
+                    el: '#app',
+                    data: {
+                        styleObj:{
+                            color:"black"
+                        }
+                    },
+                    methods: {
+                        handleDivClick:function(){
+                            this.styleObj.color=this.styleObj.color==="black"?"blue":"black";
+                        }
+                    }
+                })
+        </script>
+</body>
+</html>

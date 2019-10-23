@@ -25,6 +25,25 @@ v-text,v-html
         2：watch:性能较高，代码量复杂一点，优点可以实时监测数据变化
         3：methods：方法去计算属性，需要再插值表达式中添加括号表示方法的引用,性能最低
 
+6.条件渲染
+v-if  v-show
+
+7.样式绑定
+
+通过style对样式进行绑定
+1）.对象绑定  style="styleObj"
+    数组绑定  style="[styleObj,{fontSize:20px}]"
+
+2).class样式绑定
+
+	对象绑定  v-bind:class={"actived":"isActivied"}
+	数组绑定  v-class="[activied,activiedOne,activiedTwo]"
+
+
+8.组件深入
+1） <tr is="row"></tr>  row为自定的组件   页面元素是tr但是实际渲染的是component组件
+2） ref dom元素引用  this.$refs.conterRefOne.number是vue实例下conterRefOne组件的number值
+    this.$emit（'change'）子组件触发父组件的自定义事件
 ```
 
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue中对象列表渲染</title>
+    <script src="../../vue.js"></script>
+    <!--
+        目的：对象列表渲染
+        此时item直接会是对应的value值  key则为前面的属性  index指该数据所在的索引下标
+
+        对象中新增属性两种：1.更改为一个新的对象引用   2.set方法设置属性
+        1：若需要新加一个属性  也不能直接操作数据（例如vm.userInfo.address="北京"），但是可以更改对象引用，即重新赋值
+        vm.userInfo={
+                    name:"chen",
+                    age:22,
+                    gender:"male",
+                    salary:"secret",
+                    address:"changsha"
+                }
+
+        2：利用Vue的set方法设置对象属性，也可通过实例来进行set方法
+        例子：
+        Vue.set(vm.userInfo,"address","beijing")  //新增对象属性address为beijing 
+        or
+        vm.$set(vm.userInfo,"address","beijing")  //vue实例可以调用set方法
+    -->
+</head>
+<body>
+    <div id="app">
+        <div v-for="(item,key,index) of userInfo">
+            {{item}} ----- {{key}} -----{{index}}  
+        </div>
+    </div>
+
+    <script>
+        var vm=new Vue({
+            el: "#app",
+            data:{
+                userInfo:{
+                    name:"chen",
+                    age:22,
+                    gender:"male",
+                    salary:"secret"
+                }
+            }
+        });
+    </script>
+</body>
+</html>

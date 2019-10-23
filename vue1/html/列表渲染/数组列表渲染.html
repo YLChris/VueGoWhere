@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue中数组列表渲染</title>
+    <script src="../../vue.js"></script>
+    <!--
+        目的：渲染列表项
+        方法：利用v-for循环遍历data中的list（这是个数组）
+        v-for="(item,index) of list"  item代指具体的值   index代表值对应的索引下标
+
+
+        Vue中不能直接操作数组元素  能够更改数组数据  但是不会重新渲染到页面  例如：vm.list[1]={id:"001",text:"测试"}   但是可以通过如下变异方法进行操作数组
+
+        有三种方式可以操作数组数据并重新渲染
+        1.变异方法：
+        push()   添加数组元素
+        pop()  删除数组最后一个
+        shift()  删除数组第一项删除
+        unshift()   数组第一项添加相应内容
+        splice()  数组截取   vm.list.splice(1,1,{id:"333",text:"czl"})   表示截取数组下标为1的元素，删除一条数据，并添加一个数据为{id:"333",text:"czl"}
+        sort()  数组排序
+        reverse()  数组取反
+
+        2.改变数组引用   （数组在js里面是一个引用类型）
+        例如：
+        vm.list=[{
+                    id:"010120201",
+                    text:"chenzilong"
+                }]
+        直接改变数组的对象引用   直接赋予另外的值也可以直接操作数组数据
+
+        3:set方法
+        1：vue实例调用set方法
+        vm.$set(vm.userInfo,1,"数组第二个数被vue的实例set方法改变了")
+        2：Vue直接调用set方法
+        Vue.set(vm.userInfo,1,"数组第二个数被更改")
+    -->
+</head>
+<body>
+    <div id="app">
+        <div v-for="(item,index) of list" 
+             :key="item.id"><!--循环显示列表时最好带上key值可以提高性能  保证key值唯一的（一般为后台返回的唯一标识，尽量不要使用index）-->
+            <div>
+                {{item.text}}  ------{{index}}
+            </div>
+            &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+            <span>
+                {{item.text}} 
+            </span>
+        </div>   <!--此处div改为template占位符   目的是为了去除最外层这个div标签  但是目前template不支持key复用-->
+
+        $$$$$$$$$$$$$$$$$$$$$set方法设置新增数组属性$$$$$$$$$$$$$$$$$$$$$$$$$
+        <div v-for="(item,index) of userInfo">
+                {{item}}
+        </div>
+    </div>
+
+    <script>
+        var vm=new Vue({
+            el: "#app",
+            data:{
+                list:[{
+                    id:"010120201",
+                    text:"hello"
+                },{
+                    id:"010120202",
+                    text:"dell"
+                },{
+                    id:"010120203",
+                    text:"nice"
+                }],
+                userInfo:[1,2,3,4]
+                
+            }
+        });
+    </script>
+</body>
+</html>

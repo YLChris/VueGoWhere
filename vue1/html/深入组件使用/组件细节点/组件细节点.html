@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件使用细节点</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        1：在tbody下要使用组件（tbody下要是tr标签的话）：页面元素写tr，利用is可以去接受子组件
+    -->
+</head>
+<body>
+    <div id="root">
+        <table>
+            <tbody>
+               <tr is="row"></tr><!--此处要求是tr在tbody内部，此处的is表示当前元素虽然是显示tr但是实际上是一个row子组件  -->
+               <tr is="row"></tr>
+               <tr is="row"></tr>
+
+
+               <!-- <ul>同理有些浏览器使用子组件  可能组件元素会不在ul元素内部  此时可以在内部使用ul的子元素去转换子组件
+                   <li is="row"></li>
+               </ul>
+
+               <select>
+                   <option is="row"></option>
+               </select> -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+
+        Vue.component('row',{ 
+            data:function(){//组件内data需要是个函数  并且有返回值    Vue实例里面data就是一个对象
+                return {
+                    content:"this is a content"
+                }
+            },
+            template:'<tr><td>{{content}}</td></tr>'
+        })
+
+        var vm=new Vue({
+            el: "#root"
+        });
+    </script>
+</body>
+</html>

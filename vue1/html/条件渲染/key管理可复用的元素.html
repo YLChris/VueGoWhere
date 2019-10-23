@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>key管理可复用的元素</title>
+    <script src="../../vue.js"></script>
+    <!--
+        Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染
+        此处利用key来进行元素的唯一标识   这样子就不会复用相同的元素了
+        代码中若有相同元素进行切换的话   那么vue将会复用该元素 只要key值不同  则不会复用
+
+    -->
+</head>
+<body>
+        <div id="app">
+            <div v-if="show">
+                用户名：<input key="username"/>
+            </div>
+            <div v-else>
+                邮箱名：<input key="email"/>
+            </div>
+        </div>
+        <script>
+            var vm=new Vue({
+                el: "#app",
+                data:{
+                    show:false,
+                    message: "hello world"
+                }
+            });
+        </script>
+    </body>
+    </html>
