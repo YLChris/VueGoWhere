@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件参数校验</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        组件校验：父组件传递数值给子组件，子组件有权取校验传递的参数
+        子组件的props可以是数组形式，在需要校验的时候可以改成数组形式
+        子组件校验格式
+        props: {
+            content: [String,Number]  //String表示content必须是一个字符串类型，Number表示content必须是一个数字类型  
+        }
+        1：数组形式可以校验多个类型
+        2：对象形式
+        props: {
+            content: {
+                type:String,
+                required: true，
+                default: 'default value',
+                validator: function(value){
+                    return (value.length>5)   字符串内容长度要大于5
+                }
+            }
+        }
+        利用type也可以校验字符串或者数字类型，required为true表示父组件必须传值
+    -->
+</head>
+<body>
+    <div id="root">
+        <child content="hello world"/>
+    </div>
+</body>
+<script>
+    Vue.component('child',{
+        props: {
+            content: {
+                type:String,
+                //required: false,
+                //default: 'default value'
+                validator: function(value){
+                    return (value.length>5)
+                }
+            }
+        },
+        template: '<div>{{content}}</div>'
+    })
+    var vm=new Vue({
+        el: '#root'
+    });
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件传值</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        知识点：
+        1：单向数据流(父组件传递数据到子组件，子组件只能用  不能取修改传过来的值)
+            原因一：效果可达到，但页面控制台报错
+            原因二：若传递的数据是Obj的引用，有可能在父组件其他地方使用到了，那么可以影响其他子组件
+            解决方法：
+            在子组件里定义一个中间变量去接受，在子组件中使用此中间变量
+        2：子组件向父组件传值
+            this.$emit("changeone",2)  $emit去触发父组件的方法，直接在父组件方法里可以接受传递的参数
+
+
+        3:传值方式
+        1.父组件通过属性向子组件传值
+        2.子组件通过$emit事件触发父组件方法外加参数传递，再由父组件方法参数接受,$emit可以接受多个数据参数
+        父子组件之间有单向数据流的概念
+    -->
+</head>
+<body>
+    <div id="root">
+        <counter-one :count="1" @changeone="handleChangeOneIncrease"></counter-one><!--count加了冒号，双引号内的就是一个js表达式那就是表示数字   不加冒号表示字符串 -->
+        <counter-one :count="2" @changeone="handleChangeOneIncrease"></counter-one>
+        <h1>以上是父向子传递数值，一下是子向父传递数值</h1>
+        <div>
+            {{total}}
+        </div>
+    </div>
+</body>
+<script>
+        var counter={
+            props: ['count'],
+            data: function(){
+                return {
+                    number: this.count
+                }
+            },
+            template: '<div @click="handleClickLeijia">{{number}}</div>',
+            methods: {
+                handleClickLeijia: function(){
+                    this.number++;
+                    this.$emit('changeone',1,"附带参数")
+                }
+            }
+        }
+        var vm=new Vue({
+            el: '#root',
+            data: {
+                total: 3
+            },
+            components: {
+                counterOne: counter
+            },
+            methods:{
+                handleChangeOneIncrease: function(step,msg){
+                   this.total+=step;
+                   alert(msg)
+                }
+            }
+        })
+</script>
+</html>

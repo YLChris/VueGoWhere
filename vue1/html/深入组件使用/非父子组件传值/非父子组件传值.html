@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非父子组件间的传值（Bus/总线/发布订阅模式/观察者模式）</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        两种解决方案：
+        1：vuex
+
+        2:总线机制解决非父子组件的传值（又称作Bus/总线/发布订阅模式/观察值模式）
+    -->
+</head>
+<body>
+    <div id="root">
+        <child content="Dell"></child>
+        <child content="Lee"></child>
+    </div>
+</body>
+<script>
+
+    Vue.prototype.bus = new Vue()   //Vue的原型prototype上定义了一个bus属性，那么以后new出来的Vue实例都会有bus这个属性,此时也是将vue实例赋给了bus
+
+    Vue.component('child',{
+        data:function(){
+            return {
+                selfContent:this.content
+            }
+        },
+        props:{
+            content:String
+        },
+        template:'<div @click="handleClick">{{selfContent}}</div>',
+        methods:{  
+            handleClick:function(){
+                this.bus.$emit('changeone',this.selfContent)
+               // alert(this.selfContent);
+            }
+        },
+        mounted:function(){//事件的监听   页面渲染之后触发监听
+            var this_=this
+            this.bus.$on('changeone',function(msg){
+                console.log(this_.selfContent);
+                this_.selfContent=msg;
+            })
+        }
+    })
+    var vm=new Vue({
+        el: '#root'
+    });
+</script>
+</html>

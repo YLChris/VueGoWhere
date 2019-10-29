@@ -24,7 +24,7 @@
         <script>
             var TodoItems = {
                 props: ['contentaa_bb','item_indexbb'],
-                template: "<li @click='handleItemClick'>{{contentaa_bb}}</li>",
+                template: "<li @click='handleItemClick'>{{contentaa_bb}}****{{item_indexbb}}</li>",
                 methods: {
                     handleItemClick: function (){
                         this.$emit("delete",this.item_indexbb);//$emit事件向上一层触发delete即handleItemDelete事件   点击子组件的时候会触发事件   此时的Vue是父组件   TodoItem是子组件

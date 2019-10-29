@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域插槽</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        目的：循环一组列表(但是显示方式不由子组件控制，由插槽里的内容控制)
+
+        应用场景：当子组件要循环或某一部分应该由外部传递过来的时候，就用作用域插槽
+        父组件传递子组件一个作用域插槽（必须为template的标签包含）
+        
+        <child>
+            <template slot-scope="propsxxx">父组件里套template是固定写法  此时的propsxxx就是slot下的item传递的值
+                <li>{{propsxxx.item}}-czl</li>
+            </template>
+        </child>
+        <slot v-for="itemone of list" :item=itemone>
+                                
+        </slot>
+
+
+    --> 
+</head>
+<body>
+    <div id="root">
+        <child>
+            <template slot-scope="propsxxx">
+                <h1>{{propsxxx.item}}-czl</h1>
+            </template>
+        </child>
+    </div>
+</body>
+<script>
+        Vue.component('child',{
+            data: function(){
+                return {
+                    list: [1,2,3,4]
+                }
+            },
+            template:`<div>
+                         <ul>
+                            <slot v-for="itemone of list" :item=itemone></slot>
+                         </ul>
+                      </div>`
+        });
+        var vm=new Vue({
+            el: '#root'
+        })
+</script>
+</html>

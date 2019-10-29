@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件绑定原生事件</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        一：目的想直接触发父组件的handleClick1方法alert
+            子组件中template绑定的事件是原生事件，子组件上绑定的事件是自定义事件 此时会触发两次  有些麻烦 所有需要直接父组件绑定原生事件
+
+
+            解决方法：绑定原生事件
+            直接在父组件的@click事件绑定的后面加上.native
+        -->
+</head>
+<body>
+    <div id="root">
+        <child1 @click="handleClick"></child1>
+
+        <child2 @click.native="handleClick1"></child2>
+    </div>
+</body>
+<script>
+    Vue.component('child1',{
+        template: '<div @click="handleChildClick1">这个是emit触发自定义事件，会要触发两次</div>',
+        methods:{
+            handleChildClick1: function(){
+                alert('child click');
+                this.$emit("click","子组件触发了自定义事件click也就是handleClick方法");
+            }
+        }
+    }); 
+    Vue.component('child2',{
+        template: '<div>这个是原生事件绑定</div>'
+    }); 
+    var vm=new Vue({
+        el: '#root',
+        methods: {
+            handleClick: function(msg){
+                alert(msg);
+            },
+            handleClick1: function(){
+                alert("这里是原生事件触发");
+            }
+        }
+    });
+</script>
+</html>

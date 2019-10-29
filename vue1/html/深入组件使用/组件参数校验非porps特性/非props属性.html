@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非props属性特性</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        非props特性：
+        1:若父组件传值给子组件，子组件没有props去接受，那么父组件的属性称之为非props属性，那么页面会报错
+        2：若子组件没有用到父组件传递的值，那么该非prop特性的属性会在页面dom元素上显示
+    -->
+</head>
+<body>
+    <div id="root">
+        <child content="hello world"/>
+    </div>
+</body>
+<script>
+    Vue.component('child',{
+        // props: {
+        //     content: {
+        //         type:String,
+        //         //required: false,
+        //         //default: 'default value'
+        //         // validator: function(value){
+        //         //     return (value.length>5)
+        //         // }
+        //     }
+        // },
+        template: '<div>hello</div>'
+    })
+    var vm=new Vue({
+        el: '#root'
+    });
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插槽</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        插槽的应用场景：父组件传递dom给子组件展示
+        目的：
+        当子组件有一部分内容需要展示父组件传递的dom进行显示，例如父组件传递一串html，在子组件里面要显示该段代码
+
+        使用方法：
+        在父组件内插入相应要传递的dom,然后再子组件的template里用<slot></slot>标签就可以看到插入的值
+
+        一：<slot></slot>如何定义默认值
+        1：父组件没有传递dom，在子组件的slot里添加默认值，则页面将会显示该默认值  <slot>默认值</slot>
+
+        二：具名插槽(也就是给插槽命名，也有默认值)
+        1:
+        例子：
+        父组件插槽里的内容：
+        <div class="header" slot="head">header</div>
+        <div class="footer" slot="footer">footer</div>
+        子组件显示：
+        <slot name='header'></slot>
+        <slot name='footer'></slot>
+        
+    --> 
+</head>
+<body>
+    <div id="root">
+        <body-content>
+            <div class="header" slot="header">header</div>
+            <div class="footer" slot="footer">footer</div>
+        </body-content>
+    </div>
+</body>
+<script>
+        Vue.component('body-content',{
+            template:`<div> 
+                        <slot name='header'>
+                            <h1>default header</h1>
+                        </slot>
+                        <div class='content'>content</div>
+                        <slot name='footer'></slot>
+                     </div>`
+        });
+        var vm=new Vue({
+            el: '#root'
+        })
+</script>
+</html>

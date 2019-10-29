@@ -24,8 +24,8 @@
           元素引用
         </div>
 
-        <counter ref="counterRef1" @change="counterChange"></counter>
-        <counter ref="counterRef2" @change="counterChange"></counter>
+        <counter ref="counterRef1" @change-conter="counterChange"></counter>
+        <counter ref="counterRef2" @change-conter="counterChange"></counter>
         <div>{{total}}</div>
     </div>
     <script>
@@ -40,7 +40,7 @@
             methods:{
                 componentClick:function(){
                     this.number++;
-                    this.$emit('change') //$emit是指子组件触发父组件的自定义事件
+                    this.$emit('change-conter') //$emit是指子组件触发父组件的自定义事件
                 }
             }
         });
