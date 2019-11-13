@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中同时使用过渡和动画</title>
+    <script src="../../../vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../animate.css"/>
+    <!--
+        第一次内容动画不显示 
+        在transition上添加两个属性：appear与appear-active-class  后者添加animated swing才是可以实现动画效果的
+
+         目的：既要使用animated的css动画，又要使用过渡动画
+         方法：
+             在对应的enter-active-class的后面添加transition过渡动画将会经过产生的类fadexxx-enter-active
+             leave-active-class添加fadexxx-leave-active
+
+        问题1：animate的css库的动画有时长，transition的过渡动画也有时长，那么以哪个时长呢
+        解决： 在transition声明属性transition，则表示以transition的过渡时长为准
+            
+        问题2：如何自定义过渡（过渡也就是三阶段添加类的时长）动画播放时长
+        在transition属性中定义：    :duration="1000*10"
+        :duration="{enter:1000*5,leave:1000*10}"表示入场显示过渡阶段动画为5秒  出场消失过渡阶段动画为10秒"
+    -->
+    <style>
+        .fadexxx-enter,.fadexxx-leave-to{
+            opacity: 0; 
+        }
+        .fadexxx-enter-active,.fadexxx-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition name="fadexxx"
+            :duration="{enter:1000*5,leave:1000*10}"
+            appear
+            enter-active-class="animated swing fadexxx-enter-active"
+            leave-active-class="animated shake fadexxx-leave-active"
+            appear-active-class="animated swing fadexxx-enter-active">
+            <div v-if="show">
+                我什么时候显示什么时候隐藏呢
+            </div>
+        </transition>
+        <button @click="clickChange">切换</button>
+    </div>
+</body>
+<script>
+    var vm=new Vue({
+        el:'#root',
+        data:{
+            show:true
+        },
+        methods:{
+            clickChange:function(){
+                this.show=!this.show;
+            }
+
+        }
+    });
+</script>
+</html>

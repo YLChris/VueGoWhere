@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态组件与v-once指令</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        目的：点击change按钮，第一下显示child-one再次点击出现child-two
+        实现方式：
+        1：通过v-if来判断
+        2：动态组件  <component :is="type"></component>就是一个动态组件  是vue内部的组件
+           根据is里面的数据的变化来自动加载不同的组件
+    --> 
+</head>
+<body>
+    <div id="root">
+        <component :is="type"></component>
+        <!-- <child-one v-if="type==='child-one'"></child-one>
+        <child-two v-if="type==='child-two'"></child-two> -->
+        <button @click="handleBtnClick">change</button>
+    </div>
+</body>
+<script>
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        });
+        Vue.component('child-two',{
+            template:'<div>child-two</div>'
+        });
+        var vm=new Vue({
+            el: '#root',
+            data:{
+                type:'child-one'
+            },
+            methods:{
+                handleBtnClick:function(){
+                    this.type=this.type==='child-one'?'child-two':'child-one';
+                }
+            }
+        })
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-once指令</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        目的：点击change按钮，第一下显示child-one再次点击出现child-two
+
+        不加v-once 使用v-if的方式的缺点
+        通过v-if的方式比较消耗性能，当点击change的时候，底层将会销毁掉其中某个组件，再去创建另一个组件，再次点击，也是先销毁在创建
+        
+        加v-once的优点
+        在子组件的模板里添加v-once，那么当点击change的时候，消失的组件将不会被销毁而是被加到内存中，
+        再从内存中拿出另一个组件，再次点击时，先拿出组件，将要消失的组件加到内存中
+    --> 
+</head>
+<body>
+    <div id="root">
+        <component :is="type"></component>
+        <child-one v-if="type==='child-one'"></child-one>
+        <child-two v-if="type==='child-two'"></child-two>
+        <button @click="handleBtnClick">change</button>
+    </div>
+</body>
+<script>
+        Vue.component('child-one',{
+            template:'<div v-once>child-one</div>'
+        });
+        Vue.component('child-two',{
+            template:'<div v-once>child-two</div>'
+        });
+        var vm=new Vue({
+            el: '#root',
+            data:{
+                type:'child-one'
+            },
+            methods:{
+                handleBtnClick:function(){
+                    this.type=this.type==='child-one'?'child-two':'child-one';
+                }
+            }
+        })
+</script>
+</html>

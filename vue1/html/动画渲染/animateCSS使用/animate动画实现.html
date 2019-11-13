@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中animate动画效果实现</title>
+    <script src="../../../vue.js"></script>
+    <!--
+            实现动画放大缩小
+            css知识点：
+            1：@keyframes 用来定义动画  
+               myDefineAnimate为自定义动画名
+               在内部表示百分号是指动画开始的时间比例
+
+            2:transform-origin要在定义了transform的基础上定义 ，也即是要进行动画变化
+            是根据基点进行动画变换
+
+            3:在要实现动画的地方加一层transition，当经过三个阶段时，所添加的class（.fadexxx-enter-active、.fadexxx-leave-active）
+             可以进行自定义，只要在transition上声明所需要的类名：
+            <transition name="fade" enter-active-class="Myenter"
+            leave-active-class="leave"></transition>
+            那么在css样式中即可将.fadexxx-enter-active改为.Myenter,同理leave也一样
+        -->
+    <style>
+        @keyframes myDefineAnimate{
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        .fadexxx-enter-active{
+           transform-origin: left center;
+           animation:myDefineAnimate 1s;
+        }
+        .fadexxx-leave-active{
+            transform-origin: left center;
+            animation:myDefineAnimate 1s reverse;/*反向执行*/
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition name="fadexxx">
+            <div v-if="show">
+                我什么时候显示什么时候隐藏呢
+            </div>
+        </transition>
+        <button @click="clickChange">切换</button>
+    </div>
+</body>
+<script>
+    var vm=new Vue({
+        el:'#root',
+        data:{
+            show:true
+        },
+        methods:{
+            clickChange:function(){
+                this.show=!this.show;
+            }
+
+        }
+    });
+</script>
+</html>

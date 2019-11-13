@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+    <script src="../jquery-3.3.1/jquery-3.3.1.js"></script>
+    <script>
+        $(document).ready(function(){
+            var xmpText1=$("#xmp1").text();
+            var xmpText2=$("#xmp2").text();
+            var xmpText3=$("#xmp3").text();
+            var onetext=$("#dynomic").text();
+            $("#Prm1").on("input",function(e){
+                debugger
+                if(!e.delegateTarget.value){
+                    $("#dynomic").text(onetext.replace(xmpText1,"<Prm1>"));
+                    onetext=$("#dynomic").text()
+                }else{
+                    $("#dynomic").text(onetext.replace(xmpText1,e.delegateTarget.value));
+                    xmpText1=e.delegateTarget.value;
+                    onetext=$("#dynomic").text()
+                }
+            })
+
+            $("#Prm2").on("input",function(e){
+                debugger
+                if(!e.delegateTarget.value){
+                    $("#dynomic").text(onetext.replace(xmpText2,"<Prm2>"));
+                    onetext=$("#dynomic").text()
+                }else{
+                    $("#dynomic").text(onetext.replace(xmpText2,e.delegateTarget.value));
+                    xmpText2=e.delegateTarget.value;
+                    onetext=$("#dynomic").text()
+                }
+            })
+
+            $("#Prm3").on("input",function(e){
+                debugger
+                if(!e.delegateTarget.value){
+                    $("#dynomic").text(onetext.replace(xmpText3,"<Prm3>"));
+                    onetext=$("#dynomic").text()
+                }else{
+                    $("#dynomic").text(onetext.replace(xmpText3,e.delegateTarget.value));
+                    xmpText3=e.delegateTarget.value;
+                    onetext=$("#dynomic").text()
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <input id="Prm1" name="Prm1"/>用户，恭喜您，尾号为<input id="Prm2" name="Prm2"/>的手机号，中了<input id="Prm3" name="Prm3"/>超级大奖
+<br/>
+    <div disabled id="dynomic">
+            <xmp id="xmp1"><Prm1></xmp>用户，恭喜您，尾号为<xmp id="xmp2"><Prm2></xmp>的手机号，中了<xmp id="xmp3"><Prm3></xmp>超级大奖
+    </div>
+</body>
+</html>

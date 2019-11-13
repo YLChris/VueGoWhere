@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中动画原理</title>
+    <script src="../../../vue.js"></script>
+    <!--
+        一：目的：
+            点击按钮动画隐藏或显示
+           方法：
+           要实现动画，则必须在要进行动画渲染的dom外层添加一层transition
+              
+        二：知识点：
+            transition表示包裹的内容里有一段过渡的动画效果
+            当内容被transition包裹之后被触发显示会经过三个阶段添加class或移除
+                第一阶段：给包裹的内容上添加class为：fadexxx-enter、fadexxx-enter-active
+                第二阶段：在运行中的第二阶段时将第一阶段的fadexxx-enter给移除掉，并会添加fadexxx-enter-to,
+                第三阶段：在运行完之后会移除fadexxx-enter-to、fadexxx-enter-active
+            当内容由显示到隐藏则出现下列
+                第一阶段：fadexxx-leave、fadexxx-leave-active
+                第二阶段：移除fadexxx-leave，增加fadexxx-leave-to
+                第三阶段：移除fadexxx-leave-to,fadexxx-leave-active
+            属性： 
+                1:name表示给当前transition命名,此时的name会与在动画触发时添加的style样式有关  
+                 ！！！当不写name时，阶段中将会产生以v开头的的css样式 例如：v-enter、v-enter-active
+    -->
+    <style>
+        .fadexxx-enter{
+            opacity: 0;
+        }
+        .fadexxx-enter-active{
+            transition: opacity 10s;/*transition:此时走到第二阶段时，fadexxx-enter被移除掉，transition监听到opacity改变，那么该transition将会在10s内完成动画过渡
+                                    transition-property	指定CSS属性的name，transition效果
+                                    transition-duration	transition效果需要指定多少秒或毫秒才能完成
+                                    transition-timing-function	指定transition效果的转速曲线
+                                    transition-delay     指定动画效果开始时间  也就是等待多久开始*/
+        }
+
+        .fadexxx-leave-to{/*此时可以和fadexxx-enter合并，此时离开的事件会是.fadexxx-leave-to，给fadexxx-leave没用*/
+            opacity: 0;
+        }
+        .fadexxx-leave-active{/*此处可以和fadexxx-enter-active合并*/
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition name="fadexxx">
+            <div v-if="show">
+                我什么时候显示什么时候隐藏呢
+            </div>
+        </transition>
+        <button @click="clickChange">切换</button>
+    </div>
+</body>
+<script>
+    var vm=new Vue({
+        el:'#root',
+        data:{
+            show:true
+        },
+        methods:{
+            clickChange:function(){
+                this.show=!this.show;
+            }
+
+        }
+    });
+</script>
+</html>

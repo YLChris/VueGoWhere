@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中animate.css库使用</title>
+    <script src="../../../vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../animate.css"/>
+    <!--
+        引入使用animate库动画效果
+        1：自定义transition三阶段的类class，并起名animated表示将使用animated库
+            例子：
+            enter-active-class="animated swing"
+            leave-active-class="animated shake"
+            后面跟上具体要使用的动画效果
+    -->
+</head>
+<body>
+    <div id="root">
+        <transition name="fadexxx"
+            enter-active-class="animated swing"
+            leave-active-class="animated shake">
+            <div v-if="show">
+                我什么时候显示什么时候隐藏呢
+            </div>
+        </transition>
+        <button @click="clickChange">切换</button>
+    </div>
+</body>
+<script>
+    var vm=new Vue({
+        el:'#root',
+        data:{
+            show:true
+        },
+        methods:{
+            clickChange:function(){
+                this.show=!this.show;
+            }
+
+        }
+    });
+</script>
+</html>
